@@ -1,5 +1,7 @@
 #include <gl\glew.h>
+#include <iostream>
 #include <MeGlWindow.h>
+using namespace std;
 
 extern const char* vertexShaderCode;
 extern const char* fragmentShaderCode;
@@ -14,6 +16,24 @@ extern float getX(int x);
 extern float getY(int y);
 
 extern GLfloat ERSymbol[];
+bool checkShaderStatus(GLuint shaderID)
+{
+	GLint compileStatus;
+	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &compileStatus);
+	if (compileStatus != GL_TRUE)
+	{
+		GLint infoLogLength;
+		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
+		GLchar* buffer = new GLchar[infoLogLength];
+
+		GLsizei bufferSize;
+		glGetShaderInfoLog(shaderID, infoLogLength, &bufferSize, buffer);
+		cout << buffer << endl;
+		delete[] buffer;
+		return false;
+	}
+	return true;
+}
 
 void sendDataToOpenGL()
 {
@@ -223,7 +243,7 @@ void installShaders()
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-	const char* adapter[1];
+	const GLchar* adapter[1];
 	adapter[0] = vertexShaderCode;
 	glShaderSource(vertexShaderID, 1, adapter, 0);
 	adapter[0] = fragmentShaderCode;
@@ -231,6 +251,9 @@ void installShaders()
 
 	glCompileShader(vertexShaderID);
 	glCompileShader(fragmentShaderID);
+
+	if( ! checkShaderStatus(vertexShaderID) || ! checkShaderStatus(fragmentShaderID))
+		return;
 
 	GLuint programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
