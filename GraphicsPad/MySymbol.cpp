@@ -1,24 +1,23 @@
 #include <gl\glew.h>
-#include <MeGlWindow.h>
 
-extern const char* vertexShaderCode;
-extern const char* fragmentShaderCode;
+extern const int refWidth = 605;
+extern const int refHeight = 689;
 
-extern const int refWidth;
-extern const int refHeight;
+float GetGLCoordinate(int value, int max) {
+	float r;
+	r = (float)value / (float)max * 2.0f - 1.0f;
+	return r;
+}
 
-extern float GetGLCoordinate(int value, int max);
+float getX(int x) {
+	return GetGLCoordinate(x, refWidth);
+}
 
-extern float getX(int x);
+float getY(int y) {
+	return GetGLCoordinate(refHeight - y, refHeight);
+}
 
-extern float getY(int y);
-
-extern GLfloat ERSymbol[];
-
-void sendDataToOpenGL()
-{
-	GLfloat verts[] =
-	{
+const GLfloat ERSymbol[] = {
 		// Data
 		// float x, float, y,
 		// float r, float g, floar b
@@ -53,7 +52,7 @@ void sendDataToOpenGL()
 		getX(313),
 		getY(326),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
-		
+
 		// 6
 		getX(295),
 		getY(4),
@@ -78,12 +77,12 @@ void sendDataToOpenGL()
 		// 10
 		getX(450),
 		getY(461),
-		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,		
-		
+		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
+
 		// 11
 		getX(432),
 		getY(470),
-		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,	
+		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 12
 		getX(410),
@@ -94,17 +93,17 @@ void sendDataToOpenGL()
 		getX(331),
 		getY(511),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
-		
+
 		// 14
 		getX(352),
 		getY(535),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
-		
+
 		// 15
 		getX(347),
 		getY(495),
-		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,			
-		
+		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
+
 		// 16
 		getX(471),
 		getY(674),
@@ -125,7 +124,7 @@ void sendDataToOpenGL()
 		getX(284),
 		getY(364),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
-		
+
 		// 20
 		getX(171),
 		getY(237),
@@ -135,7 +134,7 @@ void sendDataToOpenGL()
 		getX(290),
 		getY(185),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
-		
+
 		// 22
 		getX(290),
 		getY(165),
@@ -150,7 +149,7 @@ void sendDataToOpenGL()
 		getX(256),
 		getY(195),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
-		
+
 		// 25
 		getX(147),
 		getY(97),
@@ -177,80 +176,27 @@ void sendDataToOpenGL()
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 };
 
-	GLuint myBufferID;
-	glGenBuffers(1, &myBufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, myBufferID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts),
-		verts, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (char*)(sizeof(float) * 2));
+const GLushort ERSymbolIndices[] = {
+	// BG
+	0,1,2,
+	0,2,3,
+	// Symbol
+	4,5,6,
+	4,5,7,
+	// R
+	8,9,10,
+	8, 9, 11,
+	10,12,13,
+	13,10,14,
+	13, 16, 15,
+	// E
+	17, 18, 19,
+	17, 18, 20,
+	18,21,22,
+	18,21,23,
+	21,24,25,
+	21, 25, 26,
+	25,27,28,
+	25,27,29,
 
-	GLushort indices[] = { 
-		// BG
-		0,1,2, 
-		0,2,3,
-		// Symbol
-		4,5,6,
-		4,5,7,
-		// R
-		8,9,10,
-		8, 9, 11,
-		10,12,13,
-		13,10,14,
-		13, 16, 15,
-		// E
-		17, 18, 19,
-		17, 18, 20,
-		18,21,22,
-		18,21,23,
-		21,24,25,
-		21, 25, 26,
-		25,27,28,
-		25,27,29,
-
-	};
-	GLuint indexBufferID;
-	glGenBuffers(1, &indexBufferID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices),
-		indices, GL_STATIC_DRAW);
-}
-
-void installShaders()
-{
-	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
-	const char* adapter[1];
-	adapter[0] = vertexShaderCode;
-	glShaderSource(vertexShaderID, 1, adapter, 0);
-	adapter[0] = fragmentShaderCode;
-	glShaderSource(fragmentShaderID, 1, adapter, 0);
-
-	glCompileShader(vertexShaderID);
-	glCompileShader(fragmentShaderID);
-
-	GLuint programID = glCreateProgram();
-	glAttachShader(programID, vertexShaderID);
-	glAttachShader(programID, fragmentShaderID);
-	glLinkProgram(programID);
-
-	glUseProgram(programID);
-}
-
-void MeGlWindow::initializeGL()
-{
-	glewInit();
-	sendDataToOpenGL();
-	installShaders();
-}
-
-void MeGlWindow::paintGL()
-{
-	//glViewport(0, 0, width(), height());
-	glViewport(0, 0, refWidth, refHeight);
-	//glDrawArrays(GL_TRIANGLES, 0, 6);
-	glDrawElements(GL_TRIANGLES, 51, GL_UNSIGNED_SHORT, 0);
-}
+};
