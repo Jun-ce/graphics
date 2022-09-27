@@ -16,8 +16,6 @@ extern float getX(int x);
 
 extern float getY(int y);
 
-extern GLfloat ERSymbol[];
-bool checkShaderStatus(GLuint shaderID)
 bool checkStatus(
 	GLuint objectID,
 	PFNGLGETSHADERIVPROC objectPropertyGetterFunc,
