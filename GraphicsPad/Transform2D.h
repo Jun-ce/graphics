@@ -10,4 +10,5 @@ public:
 	void outGlOffset(float& x, float& y);
 	void outScale(float& x, float& y);
 	void outSingleScale(float& s);
+	void setUniScale(float s);
 };

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <MeGlWindow.h>
+#include <QtGui\qkeyevent>
 #include <glm/glm.hpp>
 #include <Transform2D.h>
 using namespace std;
@@ -36,6 +37,7 @@ GLint uniColorAttribLoc;
 
 Transform2D triAtrans;
 Transform2D triBtrans;
+const float triMoveSpeed = 0.01f;
 
 #pragma endregion
 
@@ -330,22 +332,32 @@ void installShaders()
 	glUseProgram(programID);
 }
 
-void applyUniform() {
-
-	// === Set Uniform ===
+void initUniformData() {
 	glUniform2f(offsetAttribLoc, 0.0f, 0.0f);
 	glUniform1f(scaleAttribLoc, 0.5f);
 	glUniform3f(uniColorAttribLoc, 1.0f, 0.0f, 0.0f);
-	// ===
 }
 
+
+void updateUniform() {
+	// test
+	glUniform2f(offsetAttribLoc, triAtrans.position.x, triAtrans.position.y);
+}
+
+void initTriTrans2D() {
+	triAtrans.position = glm::vec2(-0.5f, -0.5f);
+	triBtrans.position = glm::vec2(0.5f, 0.5f);
+	triAtrans.setUniScale(0.33f);
+	triBtrans.setUniScale(0.33f);
+}
 
 void MeGlWindow::initializeGL()
 {
 	glewInit();
 	sendDataToOpenGL();
 	installShaders();
-	applyUniform();
+	initTriTrans2D();
+	initUniformData();
 }
 
 void MeGlWindow::paintGL()
@@ -353,9 +365,46 @@ void MeGlWindow::paintGL()
 	glViewport(0, 0, width(), height());
 	//glViewport(0, 0, refWidth, refHeight);
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	// CLear Screen
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	glDrawElements(GL_TRIANGLES, 51, GL_UNSIGNED_SHORT, 0);
 }
 
-void MeGlWindow::keyPressEvent(QKeyEvent* e) {
-
+void MeGlWindow::keyPressEvent(QKeyEvent* e) 
+{
+	switch (e->key())
+	{
+	case Qt::Key::Key_W:
+		triAtrans.position.y += triMoveSpeed;
+		break;
+	case Qt::Key::Key_A:
+		triAtrans.position.x -= triMoveSpeed;
+		break;
+	case Qt::Key::Key_S:
+		triAtrans.position.y -= triMoveSpeed;
+		break;
+	case Qt::Key::Key_D:
+		triAtrans.position.x += triMoveSpeed;
+		break;
+	case Qt::Key::Key_Up:
+		triBtrans.position.y += triMoveSpeed;
+		break;
+	case Qt::Key::Key_Left:
+		triBtrans.position.x -= triMoveSpeed;
+		break;
+	case Qt::Key::Key_Down:
+		triBtrans.position.y -= triMoveSpeed;
+		break;
+	case Qt::Key::Key_Right:
+		triBtrans.position.x += triMoveSpeed;
+		break;
+	default:
+		break;
+	}
+	updateUniform();
+	repaint();
 }
+

@@ -21,3 +21,7 @@ void Transform2D::outScale(float& x, float& y) {
 	x = this->scale.x;
 	y = this->scale.y;
 }
+
+void Transform2D::setUniScale(float s) {
+	this->scale = glm::vec2(s, s);
+}
