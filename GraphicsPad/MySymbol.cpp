@@ -9,11 +9,11 @@ float GetGLCoordinate(int value, int max) {
 	return r;
 }
 
-float getX(int x) {
+float getERSymbolX(int x) {
 	return GetGLCoordinate(x, refWidth);
 }
 
-float getY(int y) {
+float getERSymbolY(int y) {
 	return GetGLCoordinate(refHeight - y, refHeight);
 }
 
@@ -44,135 +44,135 @@ const GLfloat ERSymbol[] = {
 
 		// Symbol
 		// 4
-		getX(269),
-		getY(326),
+		getERSymbolX(269),
+		getERSymbolY(326),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 5 
-		getX(313),
-		getY(326),
+		getERSymbolX(313),
+		getERSymbolY(326),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 6
-		getX(295),
-		getY(4),
+		getERSymbolX(295),
+		getERSymbolY(4),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 7
-		getX(289),
-		getY(639),
+		getERSymbolX(289),
+		getERSymbolY(639),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// R 
 		// 8
-		getX(301),
-		getY(320),
+		getERSymbolX(301),
+		getERSymbolY(320),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 9
-		getX(300),
-		getY(383),
+		getERSymbolX(300),
+		getERSymbolY(383),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 10
-		getX(450),
-		getY(461),
+		getERSymbolX(450),
+		getERSymbolY(461),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 11
-		getX(432),
-		getY(470),
+		getERSymbolX(432),
+		getERSymbolY(470),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 12
-		getX(410),
-		getY(427),
+		getERSymbolX(410),
+		getERSymbolY(427),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 13
-		getX(331),
-		getY(511),
+		getERSymbolX(331),
+		getERSymbolY(511),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 14
-		getX(352),
-		getY(535),
+		getERSymbolX(352),
+		getERSymbolY(535),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 15
-		getX(347),
-		getY(495),
+		getERSymbolX(347),
+		getERSymbolY(495),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 16
-		getX(471),
-		getY(674),
+		getERSymbolX(471),
+		getERSymbolY(674),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// E
 		// 17
-		getX(286),
-		getY(309),
+		getERSymbolX(286),
+		getERSymbolY(309),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 18
-		getX(150),
-		getY(251),
+		getERSymbolX(150),
+		getERSymbolY(251),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 19
-		getX(284),
-		getY(364),
+		getERSymbolX(284),
+		getERSymbolY(364),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 20
-		getX(171),
-		getY(237),
+		getERSymbolX(171),
+		getERSymbolY(237),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 21
-		getX(290),
-		getY(185),
+		getERSymbolX(290),
+		getERSymbolY(185),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 22
-		getX(290),
-		getY(165),
+		getERSymbolX(290),
+		getERSymbolY(165),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 23
-		getX(175),
-		getY(272),
+		getERSymbolX(175),
+		getERSymbolY(272),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 24
-		getX(256),
-		getY(195),
+		getERSymbolX(256),
+		getERSymbolY(195),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 25
-		getX(147),
-		getY(97),
+		getERSymbolX(147),
+		getERSymbolY(97),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 26
-		getX(159),
-		getY(92),
+		getERSymbolX(159),
+		getERSymbolY(92),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 27
-		getX(295),
-		getY(96),
+		getERSymbolX(295),
+		getERSymbolY(96),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 28
-		getX(294),
-		getY(51),
+		getERSymbolX(294),
+		getERSymbolY(51),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 
 		// 29
-		getX(174),
-		getY(115),
+		getERSymbolX(174),
+		getERSymbolY(115),
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 };
 
