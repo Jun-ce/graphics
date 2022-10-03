@@ -4,10 +4,12 @@
     <ClCompile Include="Mainer.cpp" />
     <ClCompile Include="MeGlWindow.cpp" />
     <ClCompile Include="MySymbol.cpp" />
+    <ClCompile Include="Transform2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MeGlWindow.h" />
     <ClInclude Include="FragmentShaderCode.glsl" />
+    <ClInclude Include="Transform2D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShaderCode.glsl" />
