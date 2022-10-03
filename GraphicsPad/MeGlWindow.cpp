@@ -16,6 +16,14 @@ extern float getX(int x);
 
 extern float getY(int y);
 
+// GL mid
+GLuint programID;
+GLint offsetAttribLoc;
+GLint scaleAttribLoc;
+GLint uniColorAttribLoc;
+
+// 
+
 bool checkStatus(
 	GLuint objectID,
 	PFNGLGETSHADERIVPROC objectPropertyGetterFunc,
@@ -211,16 +219,21 @@ void sendDataToOpenGL()
 		127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 };
 
+	// ===Def data buffer===
 	GLuint myBufferID;
 	glGenBuffers(1, &myBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, myBufferID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verts),
 		verts, GL_STATIC_DRAW);
+	// ===
+
+
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (char*)(sizeof(float) * 2));
 
+	// ===Def idx buffer===
 	GLushort indices[] = { 
 		// BG
 		0,1,2, 
@@ -250,6 +263,7 @@ void sendDataToOpenGL()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices),
 		indices, GL_STATIC_DRAW);
+	// ===
 }
 
 string readShaderCode(const char* fileName)
@@ -284,7 +298,7 @@ void installShaders()
 	if( ! checkShaderStatus(vertexShaderID) || ! checkShaderStatus(fragmentShaderID))
 		return;
 
-	GLuint programID = glCreateProgram();
+	programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);
 	glLinkProgram(programID);
@@ -292,20 +306,37 @@ void installShaders()
 	if ( ! checkProgramStatus(programID))
 		return;
 
+	// === Get Uniform location ===
+	offsetAttribLoc = glGetUniformLocation(programID, "vertexOffset");
+	scaleAttribLoc = glGetUniformLocation(programID, "vertexScale");
+	uniColorAttribLoc = glGetUniformLocation(programID, "vertexUniColor");
+	// ===
+
 	glUseProgram(programID);
 }
+
+void applyUniform() {
+
+	// === Set Uniform ===
+	glUniform2f(offsetAttribLoc, 0.0f, 0.0f);
+	glUniform1f(scaleAttribLoc, 0.5f);
+	glUniform3f(uniColorAttribLoc, 1.0f, 0.0f, 0.0f);
+	// ===
+}
+
 
 void MeGlWindow::initializeGL()
 {
 	glewInit();
 	sendDataToOpenGL();
 	installShaders();
+	applyUniform();
 }
 
 void MeGlWindow::paintGL()
 {
-	//glViewport(0, 0, width(), height());
-	glViewport(0, 0, refWidth, refHeight);
+	glViewport(0, 0, width(), height());
+	//glViewport(0, 0, refWidth, refHeight);
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
 	glDrawElements(GL_TRIANGLES, 51, GL_UNSIGNED_SHORT, 0);
 }
