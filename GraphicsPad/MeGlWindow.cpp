@@ -361,19 +361,20 @@ void initUniformData() {
 
 
 void updateUniform() {
-	// test
 	glUniform2f(offsetAttribLoc, triAtrans.position.x, triAtrans.position.y);
+	glUniform1f(scaleAttribLoc, triAtrans.scale.x);
 }
 
 void updateUniform2() {
 	glUniform2f(offsetAttribLoc, triBtrans.position.x, triBtrans.position.y);
+	glUniform1f(scaleAttribLoc, triBtrans.scale.x);
 }
 
 void initTriTrans2D() {
 	triAtrans.position = glm::vec2(-0.5f, -0.5f);
 	triBtrans.position = glm::vec2(0.5f, 0.5f);
-	triAtrans.setUniScale(0.33f);
-	triBtrans.setUniScale(0.33f);
+	triAtrans.setUniScale(0.2f);
+	triBtrans.setUniScale(0.4f);
 }
 
 void MeGlWindow::initializeGL()
@@ -396,9 +397,9 @@ void MeGlWindow::paintGL()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	updateUniform();
-	glDrawElements(GL_TRIANGLES, 51, GL_UNSIGNED_SHORT, (void*)sizeof(verts));
+	glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, (void*)sizeof(verts));
 	updateUniform2();
-	glDrawElements(GL_TRIANGLES, 51, GL_UNSIGNED_SHORT, (void*)(sizeof(verts)+sizeof(indices)));
+	glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, (void*)(sizeof(verts)+sizeof(indices)));
 }
 
 void MeGlWindow::keyPressEvent(QKeyEvent* e) 
