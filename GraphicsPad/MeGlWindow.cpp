@@ -25,6 +25,7 @@ extern float getERSymbolY(int y);
 
 int triNo = 30;
 
+// ER Symbol data
 GLfloat verts[] =
 {
 	// Data
@@ -185,6 +186,7 @@ GLfloat verts[] =
 	127.0f / 255.0f, 211.0f / 255.0f, 42.0f / 255.0f,
 };
 
+// ER Symbol idx
 GLushort indices[] = {
 	// BG
 	0,1,2,
@@ -215,8 +217,6 @@ GLushort indices[] = {
 // GL mid
 #pragma region GlMid
 
-
-
 GLuint programID;
 GLint offsetAttribLoc;
 GLint scaleAttribLoc;
@@ -224,8 +224,8 @@ GLint uniColorAttribLoc;
 
 #pragma endregion
 
-// My Data
-#pragma region MyData
+// My App Data
+#pragma region MyAppData
 
 Transform2D triAtrans;
 Transform2D triBtrans;
@@ -275,31 +275,24 @@ void sendDataToOpenGL()
 	GLuint myBufferID;
 	glGenBuffers(1, &myBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, myBufferID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts) + sizeof(indices) + sizeof(indices),
+	// Def a buffer size of {verts+indices*2}
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verts) + sizeof(indices),
 		NULL, GL_STATIC_DRAW);
 	// ER Symbol Data
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(verts), verts);
 	// ===
 
-
+	// data structure: x, y
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
+	// data structure: r, g, b
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (char*)(sizeof(float) * 2));
 
 	// ===Def idx buffer===
-	
-
-	
-	//GLuint indexBufferID;
-	//glGenBuffers(1, &indexBufferID);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices),
-	//	indices, GL_STATIC_DRAW);
-	
+	// Bind 1 idx buffer and send its data
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, myBufferID);
 	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, sizeof(verts), sizeof(indices), indices);
-	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, sizeof(verts) + sizeof(indices), sizeof(indices), indices);
 
 	// ===
 }
@@ -396,10 +389,11 @@ void MeGlWindow::paintGL()
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	// Draw the ER symbol twice, but use different uniform
 	updateUniform();
 	glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, (void*)sizeof(verts));
 	updateUniform2();
-	glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, (void*)(sizeof(verts)+sizeof(indices)));
+	glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_SHORT, (void*)sizeof(verts));
 }
 
 void MeGlWindow::keyPressEvent(QKeyEvent* e) 
