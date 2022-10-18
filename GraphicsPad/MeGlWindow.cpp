@@ -46,18 +46,44 @@ void MeGlWindow::paintGL()
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
-	mat4 translationMatrix = glm::translate(mat4(), vec3(0.0f, 0.0f, -3.0f));
-	mat4 rotationMatrix = glm::rotate(mat4(), 54.0f, vec3(1.0f, 0.0f, 0.0f));
-	mat4 projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
-
-	mat4 fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
-
 	GLint fullTransformMatrixUniformLocation =
 		glGetUniformLocation(programID, "fullTransformMatrix");
 
-	glUniformMatrix4fv(fullTransformMatrixUniformLocation, 1,
-		GL_FALSE, &fullTransformMatrix[0][0]);
 
+	mat4 translationMatrix;
+	mat4 rotationMatrix;
+	mat4 projectionMatrix;
+
+	mat4 fullTransformMatrix;;
+
+	// Draw 1
+	translationMatrix = glm::translate(mat4(), vec3(0.0f, 0.0f, -8.0f));
+	rotationMatrix = glm::rotate(mat4(), 54.0f, vec3(1.0f, 0.0f, 0.0f));
+	projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
+
+	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
+
+	glUniformMatrix4fv(fullTransformMatrixUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
+	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, (void*)drawIdxOffset);
+
+	// Draw 2
+	translationMatrix = glm::translate(mat4(), vec3(-4.0f, 1.0f, -8.0f));
+	rotationMatrix = glm::rotate(mat4(), 54.0f, vec3(0.0f, 1.0f, 0.0f));
+	projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
+
+	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
+
+	glUniformMatrix4fv(fullTransformMatrixUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
+	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, (void*)drawIdxOffset);
+
+	// Draw 3
+	translationMatrix = glm::translate(mat4(), vec3(4.0f, -1.0f, -8.0f));
+	rotationMatrix = glm::rotate(mat4(), 54.0f, vec3(0.0f, 0.0f, 1.0f));
+	projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
+
+	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
+
+	glUniformMatrix4fv(fullTransformMatrixUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, (void*)drawIdxOffset);
 }
 
