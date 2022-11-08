@@ -17,6 +17,8 @@ GLuint programID;
 GLuint numIndices;
 GLuint drawIdxOffset;
 
+float myRotation = 54.0f;
+
 void sendDataToOpenGL()
 {
 	ShapeData shape = ShapeGenerator::makeCube();
@@ -54,11 +56,13 @@ void MeGlWindow::paintGL()
 	mat4 rotationMatrix;
 	mat4 projectionMatrix;
 
+	myRotation += 0.5f;
+
 	mat4 fullTransformMatrix;;
 
 	// Draw 1
 	translationMatrix = glm::translate(mat4(), vec3(0.0f, 0.0f, -8.0f));
-	rotationMatrix = glm::rotate(mat4(), 54.0f, vec3(1.0f, 0.0f, 0.0f));
+	rotationMatrix = glm::rotate(mat4(), myRotation, vec3(1.0f, 0.0f, 0.0f));
 	projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
 
 	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
@@ -68,7 +72,7 @@ void MeGlWindow::paintGL()
 
 	// Draw 2
 	translationMatrix = glm::translate(mat4(), vec3(-4.0f, 1.0f, -8.0f));
-	rotationMatrix = glm::rotate(mat4(), 54.0f, vec3(0.0f, 1.0f, 0.0f));
+	rotationMatrix = glm::rotate(mat4(), myRotation, vec3(0.0f, 1.0f, 0.0f));
 	projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
 
 	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
@@ -78,7 +82,7 @@ void MeGlWindow::paintGL()
 
 	// Draw 3
 	translationMatrix = glm::translate(mat4(), vec3(4.0f, -1.0f, -8.0f));
-	rotationMatrix = glm::rotate(mat4(), 54.0f, vec3(0.0f, 0.0f, 1.0f));
+	rotationMatrix = glm::rotate(mat4(), myRotation, vec3(0.0f, 0.0f, 1.0f));
 	projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
 
 	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
@@ -163,10 +167,15 @@ void installShaders()
 	glUseProgram(programID);
 }
 
+
 void MeGlWindow::initializeGL()
 {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
 	sendDataToOpenGL();
 	installShaders();
+
+	// Update PaintGL for every delta ms
+	connect(&myQTimer, SIGNAL(timeout()), this, SLOT(update()));
+	myQTimer.start(16.7f);
 }
