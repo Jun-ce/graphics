@@ -121,7 +121,7 @@ void MeGlWindow::paintGL()
 	vec3 ambientLight(0.1f, 0.1f, 0.1f);
 	glUniform3fv(ambientLightUniformLocation, 1, &ambientLight[0]);
 	GLint lightPositionUniformLocation = glGetUniformLocation(programID, "lightPosition");
-	glm::vec3 lightPosition(0.0f, 1.0f, 0.0f);
+	glm::vec3 lightPosition(0.0f, 3.0f, 0.0f);
 	glUniform3fv(lightPositionUniformLocation, 1, &lightPosition[0]);
 
 
@@ -146,7 +146,7 @@ void MeGlWindow::paintGL()
 	mat4 arrowModelToWorldMatrix = glm::translate(0.0f, 1.0f, -8.0f) * glm::rotate(-90.0f, 1.0f, 0.0f, 0.0f);
 	fullTransformMatrix = worldToProjectionMatrix * arrowModelToWorldMatrix;
 	glUniformMatrix4fv(fullTransformationUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
-	glDrawElements(GL_TRIANGLES, arrowNumIndices, GL_UNSIGNED_SHORT, (void*)arrowIndexByteOffset);
+	// glDrawElements(GL_TRIANGLES, arrowNumIndices, GL_UNSIGNED_SHORT, (void*)arrowIndexByteOffset);
 
 	// Plane
 	glBindVertexArray(planeVertexArrayObjectID);
