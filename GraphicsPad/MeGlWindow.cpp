@@ -46,6 +46,8 @@ GLuint teapotIndexByteOffset;
 GLuint sphereIndexByteOffset;
 GLuint torusIndexByteOffset;
 
+glm::vec3 lightPositionWorld(0.0f, 1.5f, 0.0f);
+
 void MeGlWindow::sendDataToOpenGL()
 {
 	ShapeData cube = ShapeGenerator::makeCube();
@@ -197,7 +199,7 @@ void MeGlWindow::paintGL()
 	GLuint fullTransformationUniformLocation;
 	GLuint modelToWorldMatrixUniformLocation;
 
-	glm::vec3 lightPositionWorld(0.0f, 1.5f, 0.0f);
+	//glm::vec3 lightPositionWorld(0.0f, 1.5f, 0.0f);
 
 	glUseProgram(programID);
 	GLint ambientLightUniformLocation = glGetUniformLocation(programID, "ambientLight");
@@ -312,6 +314,18 @@ void MeGlWindow::keyPressEvent(QKeyEvent* e)
 		break;
 	case Qt::Key::Key_F:
 		camera.moveDown();
+		break;
+	case Qt::Key::Key_Left:
+		lightPositionWorld.x += 0.1f;
+		break;
+	case Qt::Key::Key_Right:
+		lightPositionWorld.x -= 0.1f;
+		break;
+	case Qt::Key::Key_Up:
+		lightPositionWorld.z += 0.1f;
+		break;
+	case Qt::Key::Key_Down:
+		lightPositionWorld.z -= 0.1f;
 		break;
 	}
 	repaint();
