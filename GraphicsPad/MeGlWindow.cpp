@@ -277,9 +277,9 @@ void MeGlWindow::paintGL()
 		glm::scale(0.1f, 0.1f, 0.1f);
 	modelToProjectionMatrix = worldToProjectionMatrix * cubeModelToWorldMatrix;
 	glUseProgram(passThroughProgramID);
-	fullTransformationUniformLocation = glGetUniformLocation(programID, "modelToProjectionMatrix");
+	fullTransformationUniformLocation = glGetUniformLocation(passThroughProgramID, "modelToProjectionMatrix");
 	glUniformMatrix4fv(fullTransformationUniformLocation, 1, GL_FALSE, &modelToProjectionMatrix[0][0]);
-	modelToWorldMatrixUniformLocation = glGetUniformLocation(programID, "modelToWorldMatrix");
+	modelToWorldMatrixUniformLocation = glGetUniformLocation(passThroughProgramID, "modelToWorldMatrix");
 	glUniformMatrix4fv(modelToWorldMatrixUniformLocation, 1, GL_FALSE,
 		&cubeModelToWorldMatrix[0][0]);
 	glDrawElements(GL_TRIANGLES, cubeNumIndices, GL_UNSIGNED_SHORT, (void*)cubeIndexByteOffset);
